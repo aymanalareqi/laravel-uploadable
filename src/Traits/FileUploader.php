@@ -51,8 +51,10 @@ trait FileUploader
                 }
                 if (is_array($model->{$fileField})) {
                     $arr = [];
-                    foreach (request()->all()[$fileField] as $file) {
-                        $arr[] = $model->uploadFile($file);
+                    if (isset(request()->all()[$fileField])) {
+                        foreach (request()->all()[$fileField] as $file) {
+                            $arr[] = $model->uploadFile($file);
+                        }
                     }
                     $model->{$fileField} = $arr;
                     $oldFileName = $model->getOriginal($fileField);

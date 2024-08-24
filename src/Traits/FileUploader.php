@@ -50,13 +50,13 @@ trait FileUploader
                     continue;
                 }
                 if (is_array($model->{$fileField})) {
-                    $arr = [];
                     if (isset(request()->all()[$fileField])) {
+                        $arr = [];
                         foreach (request()->all()[$fileField] as $file) {
                             $arr[] = $model->uploadFile($file);
                         }
+                        $model->{$fileField} = $arr;
                     }
-                    $model->{$fileField} = $arr;
                     $oldFileName = $model->getOriginal($fileField);
                     // get deleted files
                     $deletedFiles = array_diff($oldFileName ?? [], $model->{$fileField},);

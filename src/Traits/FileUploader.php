@@ -62,14 +62,18 @@ trait FileUploader
                     $deletedFiles = array_diff($oldFileName ?? [], $model->{$fileField},);
                     if (!empty($deletedFiles)) {
                         foreach ($deletedFiles as $file) {
-                            $model->deleteFile($file);
+                            if ($file != null) {
+                                $model->deleteFile($file);
+                            }
                         }
                     }
                 } else {
                     $model->{$fileField} = $model->uploadFile($model->{$fileField});
                     $oldFileName = $model->getOriginal($fileField);
                     if ($model->{$fileField} != $oldFileName) {
-                        $model->deleteFile($oldFileName);
+                        if ($oldFileName != null) {
+                            $model->deleteFile($oldFileName);
+                        }
                     }
                 }
             }

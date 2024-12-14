@@ -39,7 +39,9 @@ trait FileUploader
                     if (!isset($model->{$fileField})) {
                         continue;
                     }
-                    $model->deleteFile($model->{$fileField});
+                    if ($model->{$fileField} != null) {
+                        $model->deleteFile($model->{$fileField});
+                    }
                 }
             }
         });
